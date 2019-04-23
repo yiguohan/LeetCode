@@ -17,21 +17,35 @@ public class _02_addTwoNumbers {
 
 
     private static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode result = null;
-        boolean jinwei = false;
-        int yushu;
-        while (l1 != null || l2 != null) {
-            if (l1 == null) {
-                l1 = new ListNode(0);
-            } else {
-                l2 = new ListNode(0);
+
+        ListNode head = new ListNode(0);
+        ListNode currentNode = head;
+        ListNode p = l1;
+        ListNode q = l2;
+        int carry = 0;
+
+        while (p != null || q != null) {
+
+            int x = p == null ? 0 : p.val;
+            int y = q == null ? 0 : q.val;
+
+            int sum = x + y + carry;
+            carry = sum / 10;
+            currentNode.next = new ListNode(sum % 10);
+            if (p != null) {
+                p = p.next;
             }
-            yushu = (l1.val + l2.val + (jinwei ? 1 : 0)) % 10;
-            jinwei = (l1.val + l2.val + (jinwei ? 1 : 0)) / 10 > 0;
-            result = new ListNode(yushu);
-            result = result.next;
+            if (q != null) {
+                q = q.next;
+            }
+            currentNode = currentNode.next;
+
         }
-        return result;
+        if (carry > 0) {
+            currentNode.next = new ListNode(carry);
+        }
+        return head.next;
+
     }
 
 
