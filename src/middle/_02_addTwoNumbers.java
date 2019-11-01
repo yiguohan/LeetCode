@@ -15,8 +15,20 @@ package middle;
  */
 public class _02_addTwoNumbers {
 
+    public static void main(String[] args) {
 
-    private static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    }
+
+    public static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
+        }
+    }
+
+    private static ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
 
         ListNode head = new ListNode(0);
         ListNode currentNode = head;
@@ -48,18 +60,35 @@ public class _02_addTwoNumbers {
 
     }
 
-
-    public static class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
+    private static ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
+        ListNode result  = new ListNode(0);
+        ListNode head = result;
+        int set = 0;
+        while(l1!=null||l2!=null){
+            if(result.next==null){
+                result.next = new ListNode(0);
+            }
+            if(l1!=null&&l2!=null){
+                result.next.val = (l1.val+l2.val+set)%10;
+                set = (l1.val+l2.val+set)/10;
+            }else if(l1!=null){
+                result.next.val = (l1.val+set)%10;
+                set = (l1.val+set)/10;
+            }else {
+                result.next.val = (l2.val+set)%10;
+                set = (l2.val+set)/10;
+            }
+            if(l1!=null){
+                l1 = l1.next;
+            }
+            if(l2!=null){
+                l2 = l2.next;
+            }
+            result = result.next;
         }
-    }
-
-
-    public static void main(String[] args) {
-
+        if(set>0){
+            result.next = new ListNode(1);
+        }
+        return head.next;
     }
 }
